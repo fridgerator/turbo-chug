@@ -2,8 +2,10 @@ package com.fridgerator.DynamicConsumer.generator;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.fridgerator.DynamicConsumer.model.Retailer;
@@ -19,10 +21,11 @@ public class JsonRegistryGenerator {
     @Value("${kafka-topics.names.json-registry-topic}")
     private String jsonRegistryTopic;
 
-    JsonRegistryGenerator(KafkaTemplate<String, Object> jsonRegistryKafkaTemplate) {
+    JsonRegistryGenerator(@Qualifier("jsonRegistryKafkaTemplate") KafkaTemplate<String, Object> jsonRegistryKafkaTemplate) {
         this.jsonRegistryKafkaTemplate = jsonRegistryKafkaTemplate;
     }
 
+    @Async
     public void generateRegistryJson() throws InterruptedException {
         Faker faker = new Faker();
 
@@ -31,11 +34,12 @@ public class JsonRegistryGenerator {
 
             Retailer retailer = new Retailer(faker.company().name(), faker.address().streetAddress());
 
-            logger.info("json registry retailer : {}", retailer);
+            logger.debug("json registry retailer : {}", retailer);
 
             try {
                 jsonRegistryKafkaTemplate.send(jsonRegistryTopic, retailer);
                 jsonRegistryKafkaTemplate.flush();
+                logger.debug("json registry sent");
             } catch (Exception e) {
                 logger.error("Error publishing registry json : {}", e);
             }

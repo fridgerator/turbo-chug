@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 // import com.fridgerator.DynamicConsumer.model.Transaction;
@@ -24,6 +25,7 @@ public class AvroGenerator {
         this.avroKafkaTemplate = avroKafkaTemplate;
     }
 
+    @Async
     public void generateAvro () throws InterruptedException {
         Faker faker = new Faker();
 

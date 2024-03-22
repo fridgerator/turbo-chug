@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,8 +17,6 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.core.KafkaAdmin.NewTopics;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.fasterxml.jackson.databind.ser.std.ByteArraySerializer;
-
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer;
@@ -28,11 +27,20 @@ public class KafkaConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-    @Value("${kafka-topics.names.customers-json}")
-    private String customersTopic;
+    @Value("${kafka-topics.names.json-topic}")
+    private String jsonTopic;
 
     @Value("${kafka-topics.names.string-topic}")
     private String stringTopic;
+
+    @Value("${kafka-topics.names.json-registry-topic}")
+    private String jsonRegistryTopic;
+
+    @Value("${kafka-topics.names.avro-topic}")
+    private String avroTopic;
+
+    @Value("${kafka-topics.names.byte-array-topic}")
+    private String byteArrayTopic;
 
     @Value("${kafka-topics.replica-count}")
     int replicaCount;
@@ -46,15 +54,44 @@ public class KafkaConfig {
     @Bean
     public NewTopics topics() {
         return new NewTopics(
-            TopicBuilder.name(customersTopic)
+            TopicBuilder.name(jsonTopic)
                 .partitions(partitionCount)
                 .replicas(replicaCount)
                 .build(),
             TopicBuilder.name(stringTopic)
-            .partitions(partitionCount)
-            .replicas(replicaCount)
-            .build()
+                .partitions(partitionCount)
+                .replicas(replicaCount)
+                .build(),
+            TopicBuilder.name(jsonRegistryTopic)
+                .partitions(partitionCount)
+                .replicas(replicaCount)
+                .build(),
+            TopicBuilder.name(avroTopic)
+                .partitions(partitionCount)
+                .replicas(replicaCount)
+                .build()
         );
+    }
+
+    /**
+     * ByteArray producer config
+     */
+    @Bean
+    public ProducerFactory<String, Object> byteArrayProducerFactory() {
+        Map<String, Object> configProps = Map.of(
+            ProducerConfig.ACKS_CONFIG, "all",
+            ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true,
+            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
+            ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class,
+            ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ByteArraySerializer.class
+        );
+
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+
+    @Bean(name = "byteArrayKafkaTemplate")
+    public KafkaTemplate<String, Object> byteArrayKafkaTemplate() {
+        return new KafkaTemplate<>(byteArrayProducerFactory());
     }
 
     /**

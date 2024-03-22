@@ -19,7 +19,8 @@ kafka-topics:
     replica-count: 1
     partition-count: 1
     names:
-        customers-json: customers-json
+        json-topic: json-topic
         string-topic: string-topic
         json-registry-topic: json-registry-topic
         avro-topic: avro-topic
+        byte-array-topic: byte-array-topic

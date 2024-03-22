@@ -17,8 +17,8 @@ public class JsonGenerator {
 
     private KafkaTemplate<String, Object> jsonKafkaTemplate;
 
-    @Value("${kafka-topics.names.customers-json}")
-    private String customersTopic;
+    @Value("${kafka-topics.names.json-topic}")
+    private String jsonTopic;
 
     JsonGenerator(KafkaTemplate<String, Object> jsonKafkaTemplate) {
         this.jsonKafkaTemplate = jsonKafkaTemplate;
@@ -36,7 +36,7 @@ public class JsonGenerator {
             logger.debug("json customer : {}", customer);
 
             try {
-                jsonKafkaTemplate.send(customersTopic, customer);
+                jsonKafkaTemplate.send(jsonTopic, customer);
                 jsonKafkaTemplate.flush();
             } catch (Exception e) {
                 logger.error("Error publishing json : {}", e);

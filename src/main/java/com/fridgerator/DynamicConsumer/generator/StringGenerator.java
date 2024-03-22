@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import net.datafaker.Faker;
@@ -21,6 +22,7 @@ public class StringGenerator {
         this.stringKafakKafkaTemplate = stringKafkaTemplate;
     }
 
+    @Async
     public void generateString () throws InterruptedException {
         Faker faker = new Faker();
 
@@ -29,7 +31,7 @@ public class StringGenerator {
 
             String msg = faker.lorem().paragraph();
 
-            logger.info("string : {}", msg);
+            logger.debug("string : {}", msg);
 
             try {
                 stringKafakKafkaTemplate.send(stringTopic, msg);
