@@ -1,0 +1,10 @@
+{
+    "namespace": "com.fridgerator.avro.transactions",
+    "type": "record",
+    "name": "Transaction",
+    "fields": [
+        { "name": "amount", "type": "double" },
+        { "name": "tax", "type": "double" },
+        { "name": "item", "type": "string" }
+    ]
+}

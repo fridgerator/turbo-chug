@@ -1,0 +1,25 @@
+spring:
+    application:
+        name: DynamicConsumer
+    kafka:
+        bootstrap-servers: localhost:9092
+        properties:
+            schema:
+                registry:
+                    url: "http://localhost:8081"
+
+server:
+    port: 8080
+
+logging:
+    level:
+        root: INFO
+
+kafka-topics:
+    replica-count: 1
+    partition-count: 1
+    names:
+        customers-json: customers-json
+        string-topic: string-topic
+        json-registry-topic: json-registry-topic
+        avro-topic: avro-topic
