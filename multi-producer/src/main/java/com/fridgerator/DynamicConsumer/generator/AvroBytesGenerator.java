@@ -34,7 +34,7 @@ public class AvroBytesGenerator {
             Futurama futurama = new Futurama(faker.futurama().character(), faker.futurama().hermesCatchPhrase(),
                     faker.futurama().location(), faker.futurama().quote(), faker.number().randomDouble(2, 1, 100));
 
-            logger.info("avro bytes futurama : {}", futurama);
+            logger.debug("avro bytes futurama : {}", futurama);
 
             try {
                 avroBytesKafkaTemplate.send(avroBytesTopic, futurama);
