@@ -17,6 +17,8 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.core.KafkaAdmin.NewTopics;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
+import com.fridgerator.DynamicConsumer.util.AvroBytesSerializer;
+
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer;
@@ -41,6 +43,9 @@ public class KafkaConfig {
 
     @Value("${kafka-topics.names.byte-array-topic}")
     private String byteArrayTopic;
+
+    @Value("${kafka-topics.names.avro-bytes-topic}")
+    private String avroBytesTopic;
 
     @Value("${kafka-topics.replica-count}")
     int replicaCount;
@@ -69,8 +74,38 @@ public class KafkaConfig {
             TopicBuilder.name(avroTopic)
                 .partitions(partitionCount)
                 .replicas(replicaCount)
+                .build(),
+            TopicBuilder.name(byteArrayTopic)
+                .partitions(partitionCount)
+                .replicas(replicaCount)
+                .build(),
+            TopicBuilder.name(avroBytesTopic)
+                .partitions(partitionCount)
+                .replicas(replicaCount)
                 .build()
         );
+    }
+
+
+    /**
+     * AvroBytes producer config
+     */
+    @Bean
+    public ProducerFactory<String, Object> avroBytesProducerFactory() {
+        Map<String, Object> configProps = Map.of(
+            ProducerConfig.ACKS_CONFIG, "all",
+            ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true,
+            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
+            ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class,
+            ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AvroBytesSerializer.class
+        );
+
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+
+    @Bean(name = "avroBytesKafkaTemplate")
+    public KafkaTemplate<String, Object> avroBytesKafkaTemplate() {
+        return new KafkaTemplate<>(avroBytesProducerFactory());
     }
 
     /**

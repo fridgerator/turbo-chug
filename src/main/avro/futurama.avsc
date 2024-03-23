@@ -1,0 +1,12 @@
+{
+    "namespace": "com.fridgerator.avro.transactions",
+    "type": "record",
+    "name": "Futurama",
+    "fields": [
+        { "name": "character", "type": "string" },
+        { "name": "hermesCatchPhrase", "type": "string" },
+        { "name": "location", "type": "string" },
+        { "name": "quote", "type": "string" },
+        { "name": "id", "type": "double" }
+    ]
+}

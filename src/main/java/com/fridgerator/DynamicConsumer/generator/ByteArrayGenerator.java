@@ -37,6 +37,7 @@ public class ByteArrayGenerator {
                 .dragon(faker.gameOfThrones().dragon())
                 .house(faker.gameOfThrones().house())
                 .quote(faker.gameOfThrones().quote())
+                .id(faker.number().randomDigit())
                 .build();
             
             logger.debug("byte array GOT : {}", got);

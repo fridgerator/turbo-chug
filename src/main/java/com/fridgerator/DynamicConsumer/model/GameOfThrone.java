@@ -16,6 +16,7 @@ public class GameOfThrone {
     private String dragon;
     private String house;
     private String quote;
+    private int id;
 
     public byte[] toBytes() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();

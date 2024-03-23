@@ -24,3 +24,4 @@ kafka-topics:
         json-registry-topic: json-registry-topic
         avro-topic: avro-topic
         byte-array-topic: byte-array-topic
+        avro-bytes-topic: avro-bytes-topic

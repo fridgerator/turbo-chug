@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import com.fridgerator.DynamicConsumer.generator.AvroBytesGenerator;
 import com.fridgerator.DynamicConsumer.generator.AvroGenerator;
 import com.fridgerator.DynamicConsumer.generator.ByteArrayGenerator;
 import com.fridgerator.DynamicConsumer.generator.JsonGenerator;
@@ -21,13 +22,17 @@ public class PostConstructCaller {
     private JsonRegistryGenerator jsonRegistryGenerator;
     private AvroGenerator avroGenerator;
     private ByteArrayGenerator byteArrayGenerator;
+    private AvroBytesGenerator avroBytesGenerator;
 
-    PostConstructCaller(JsonGenerator jsonGenerator, StringGenerator stringGenerator, JsonRegistryGenerator jsonRegistryGenerator, AvroGenerator avroGenerator, ByteArrayGenerator byteArrayGenerator) {
+    PostConstructCaller(JsonGenerator jsonGenerator, StringGenerator stringGenerator,
+            JsonRegistryGenerator jsonRegistryGenerator, AvroGenerator avroGenerator,
+            ByteArrayGenerator byteArrayGenerator, AvroBytesGenerator avroBytesGenerator) {
         this.jsonGenerator = jsonGenerator;
         this.stringGenerator = stringGenerator;
         this.jsonRegistryGenerator = jsonRegistryGenerator;
         this.avroGenerator = avroGenerator;
         this.byteArrayGenerator = byteArrayGenerator;
+        this.avroBytesGenerator = avroBytesGenerator;
     }
 
     @PostConstruct
@@ -58,5 +63,11 @@ public class PostConstructCaller {
     public void initByteArray() throws InterruptedException {
         logger.info("starting bytearray generator");
         byteArrayGenerator.generateByteArray();
+    }
+
+    @PostConstruct
+    public void initAvroBytes() throws InterruptedException {
+        logger.info("starting avroBytes generator");
+        avroBytesGenerator.generateAvroBytes();
     }
 }

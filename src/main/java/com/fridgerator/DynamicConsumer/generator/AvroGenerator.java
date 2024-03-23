@@ -7,7 +7,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-// import com.fridgerator.DynamicConsumer.model.Transaction;
 import com.fridgerator.avro.transactions.Transaction;
 
 import net.datafaker.Faker;
