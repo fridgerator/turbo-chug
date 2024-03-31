@@ -1,1 +1,0 @@
-- https://docs.confluent.io/platform/current/connect/userguide.html#install-a-kconnect-plugin
