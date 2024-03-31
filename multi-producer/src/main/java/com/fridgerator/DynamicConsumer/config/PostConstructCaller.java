@@ -35,16 +35,22 @@ public class PostConstructCaller {
         this.avroBytesGenerator = avroBytesGenerator;
     }
 
+    // @PostConstruct
+    // public void initByteArray() throws InterruptedException {
+    //     logger.info("starting bytearray generator");
+    //     byteArrayGenerator.generateByteArray();
+    // }
+
+    // @PostConstruct
+    // public void initString() throws InterruptedException {
+    //     logger.info("starting string generator");
+    //     stringGenerator.generateString();
+    // }
+
     @PostConstruct
     public void initJson() throws InterruptedException {
         logger.info("starting json generator");
         jsonGenerator.generateJson();
-    }
-
-    @PostConstruct
-    public void initString() throws InterruptedException {
-        logger.info("starting string generator");
-        stringGenerator.generateString();
     }
 
     @PostConstruct
@@ -57,12 +63,6 @@ public class PostConstructCaller {
     public void initAvro() throws InterruptedException {
         logger.info("starting avro generator");
         avroGenerator.generateAvro();
-    }
-
-    @PostConstruct
-    public void initByteArray() throws InterruptedException {
-        logger.info("starting bytearray generator");
-        byteArrayGenerator.generateByteArray();
     }
 
     @PostConstruct

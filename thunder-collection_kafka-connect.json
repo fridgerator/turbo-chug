@@ -1,0 +1,133 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "kafka-connect",
+    "dateExported": "2024-03-31T00:41:56.219Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "6da48aaa-e5a8-4ba7-b0b0-fc10d364195f",
+            "colId": "0f52893a-3751-4b4b-b22e-b27f2b193c0a",
+            "containerId": "",
+            "name": "create json connector",
+            "url": "localhost:8083/connectors",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-03-30T14:45:14.440Z",
+            "modified": "2024-03-30T14:45:14.440Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"turbo-chug-json-connector\",\n    \"config\": {\n        \"connector.class\": \"com.mongodb.kafka.connect.MongoSinkConnector\",\n        \"key.converter\": \"org.apache.kafka.connect.storage.StringConverter\",\n        \"value.converter\": \"org.apache.kafka.connect.json.JsonConverter\",\n        \"connection.uri\":\"mongodb://mongodb:27017/ginormitron\",\n        \"tasks.max\": \"10\",\n        \"topics\": \"json-topic\",\n        \"flush.size\": \"5\",\n        \"rotate.interval.ms\": \"1000\",\n        \"database\": \"ginormitron\",\n        \"collection\": \"json-topic-collection\",\n        \"value.converter.schemas.enable\": false\n    }\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "451ba5c5-f658-45ec-b25c-e3cd018dc229",
+            "colId": "0f52893a-3751-4b4b-b22e-b27f2b193c0a",
+            "containerId": "",
+            "name": "create json registry connector",
+            "url": "localhost:8083/connectors",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-03-30T14:45:24.501Z",
+            "modified": "2024-03-30T14:45:24.501Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"name\": \"turbo-chug-json-sr-connector\",\r\n    \"config\": {\r\n        \"connector.class\": \"com.mongodb.kafka.connect.MongoSinkConnector\",\r\n        \"key.converter\": \"org.apache.kafka.connect.storage.StringConverter\",\r\n        \"value.converter\": \"io.confluent.connect.json.JsonSchemaConverter\",\r\n        \"value.converter.schema.registry.url\": \"http://schema-registry:8081\",\r\n        \"connection.uri\":\"mongodb://mongodb:27017/ginormitron\",\r\n        \"tasks.max\": \"10\",\r\n        \"topics\": \"json-registry-topic\",\r\n        \"flush.size\": \"5\",\r\n        \"rotate.interval.ms\": \"1000\",\r\n        \"database\": \"ginormitron\",\r\n        \"collection\": \"json-registry-topic-collection\",\r\n        \"value.converter.schemas.enable\": false\r\n    }\r\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f6dcd82f-c9b1-4430-9bd0-addf1b852c67",
+            "colId": "0f52893a-3751-4b4b-b22e-b27f2b193c0a",
+            "containerId": "",
+            "name": "get connectors",
+            "url": "localhost:8083/connectors",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-03-30T14:45:30.151Z",
+            "modified": "2024-03-30T14:50:37.127Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "df145c89-5397-4d3c-9daa-4c5f9f134204",
+            "colId": "0f52893a-3751-4b4b-b22e-b27f2b193c0a",
+            "containerId": "",
+            "name": "delete connector",
+            "url": "localhost:8083/connectors/turbo-chug-avro-bytes-connector",
+            "method": "DELETE",
+            "sortNum": 35000,
+            "created": "2024-03-30T14:51:35.370Z",
+            "modified": "2024-03-30T19:36:31.745Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "2bb1aff4-1f22-4aad-9253-fe983902c39e",
+            "colId": "0f52893a-3751-4b4b-b22e-b27f2b193c0a",
+            "containerId": "",
+            "name": "create avro bytes connector",
+            "url": "localhost:8083/connectors",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-03-30T14:45:56.934Z",
+            "modified": "2024-03-31T00:41:44.641Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"turbo-chug-avro-bytes-connector\",\n    \"config\": {\n        \"connector.class\": \"com.mongodb.kafka.connect.MongoSinkConnector\",\n        \"key.converter\": \"org.apache.kafka.connect.storage.StringConverter\",\n        \"value.converter\": \"com.fridgerator.AvroBytesConverter\",\n        \"value.converter.serde-class-path\": \"com.fridgerator.avro.transactions.Futurama\",\n        \"connection.uri\":\"mongodb://mongodb:27017/ginormitron\",\n        \"tasks.max\": \"10\",\n        \"topics\": \"avro-bytes-topic\",\n        \"flush.size\": \"5\",\n        \"rotate.interval.ms\": \"1000\",\n        \"database\": \"ginormitron\",\n        \"collection\": \"avro-bytes-topic-collection\"\n    }\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "81735b97-4629-4fbd-b18d-7542c812a74c",
+            "colId": "0f52893a-3751-4b4b-b22e-b27f2b193c0a",
+            "containerId": "",
+            "name": "create avro registry connector",
+            "url": "localhost:8083/connectors",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-03-30T14:46:01.350Z",
+            "modified": "2024-03-30T14:46:01.350Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"turbo-chug-avro-sr-connector\",\n    \"config\": {\n        \"connector.class\": \"com.mongodb.kafka.connect.MongoSinkConnector\",\n        \"key.converter\": \"org.apache.kafka.connect.storage.StringConverter\",\n        \"value.converter\": \"io.confluent.connect.avro.AvroConverter\",\n        \"value.converter.schema.registry.url\": \"http://schema-registry:8081\",\n        \"connection.uri\":\"mongodb://mongodb:27017/ginormitron\",\n        \"tasks.max\": \"10\",\n        \"topics\": \"avro-topic\",\n        \"flush.size\": \"5\",\n        \"rotate.interval.ms\": \"1000\",\n        \"database\": \"ginormitron\",\n        \"collection\": \"avro-registry-topic-collection\"\n    }\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
